@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REPO_URL=$1
-CLONE_DIR=/repo
-LOG_DIR="/logs/$(date +%Y%m%d_%H%M%S)"
+CLONE_DIR=./repo
+LOG_DIR="./logs/$(date +%Y%m%d_%H%M%S)"
 
 mkdir -p $LOG_DIR
 
