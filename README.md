@@ -1,5 +1,7 @@
 # Ejecución de la imagen en Play with Docker (PWD)
 
+- Devs: Daniel Geraldino Rivadeneira, Camilo De La Rosa Castañeda
+
 Este repositorio contiene los recursos necesarios para construir y ejecutar un contenedor Docker que automatiza la construcción de imágenes desde un repositorio de GitHub. A continuación, se detallan los pasos para ejecutarlo en [Play with Docker (PWD)](https://labs.play-with-docker.com/).
 
 ## 🚀 Pasos para ejecutar en PWD
