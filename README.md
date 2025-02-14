@@ -25,7 +25,7 @@ git clone https://github.com/dygeraldino/Dockerfile-solution.git
 ### 4. Acceder al directorio del proyecto
 
 ```bash
-cd Dockerfile-solution
+cd Dockerfile-solution/build_base
 ```
 
 ### 5. Construir la imagen `docker-builder`
