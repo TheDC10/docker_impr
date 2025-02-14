@@ -50,7 +50,7 @@ docker run --rm \
 
 - **Montaje de `/var/run/docker.sock`**: Permite al contenedor interactuar con el Docker host para construir imágenes.
 - **Volumen `/root/logs:/logs`**: Persiste los logs generados en el directorio `logs` del host.
-- **Repositorio de GitHub**: Se especifica el repositorio objetivo (`Test-Codes.git`) como argumento final.
+- **Repositorio de GitHub**: Se especifica el repositorio objetivo (`[Test-Codes.git](https://github.com/dygeraldino/Test-Codes.git)`) como argumento final.
 
 ## 📌 Notas importantes
 
