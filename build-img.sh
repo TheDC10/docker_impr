@@ -3,30 +3,49 @@
 REPO_URL=$1
 CLONE_DIR=./repo
 LOG_DIR="/logs/$(date +%Y%m%d_%H%M%S)"
+RESULTS_FILE="$LOG_DIR/results.txt"
 
-mkdir -p $LOG_DIR
+mkdir -p "$LOG_DIR"
+touch "$RESULTS_FILE"
 
-git clone $REPO_URL $CLONE_DIR
-cd $CLONE_DIR
+git clone "$REPO_URL" "$CLONE_DIR"
+cd "$CLONE_DIR"
 
 find . -name Dockerfile | while read dockerfile; do
-  context_dir=$(dirname $dockerfile)
-  image_name=$(basename $context_dir | tr '[:upper:]' '[:lower:]')
+  context_dir=$(dirname "$dockerfile")
+  image_name=$(basename "$context_dir" | tr '[:upper:]' '[:lower:]')
   image_log_dir="$LOG_DIR/$image_name"
   
-  mkdir -p $image_log_dir
+  mkdir -p "$image_log_dir"
   
   echo "Construyendo imagen: $image_name"
-  docker build -t $image_name $context_dir
+  docker build -t "$image_name" "$context_dir"
   
-  echo "Ejecutando contenedor y guardando resultados..."
+  echo "Ejecutando contenedor..."
   timestamp=$(date +%Y%m%d_%H%M%S)
-  docker run --rm \
-    --name "${image_name}_container" \
-    $image_name \
-    2>&1 | tee "$image_log_dir/${timestamp}.log"
+  log_file="$image_log_dir/${timestamp}.log"
+  docker run --rm --name "${image_name}_container" "$image_name" 2>&1 | tee "$log_file"
   
-  echo "Logs guardados en: $image_log_dir/${timestamp}.log"
+  time=$(grep -oE '[0-9]+' "$log_file" | head -n1)
+  case "$image_name" in
+    "go_app") language="Go" ;;
+    "rust_app") language="Rust" ;;
+    "java_app") language="Java" ;;
+    "js_app") language="JavaScript" ;;
+    "python_app") language="Python" ;;
+    *) language="Desconocido" ;;
+  esac
+  
+  echo "$language|$time|ms" >> "$RESULTS_FILE"
 done
 
-echo "Todos los logs disponibles en: $LOG_DIR"
+TABLE_FILE="$LOG_DIR/execution_summary.txt"
+{
+  echo "Lenguaje     | Tiempo (ms)"
+  echo "-------------|------------"
+  awk -F '|' '{printf "%-12s | %9s\n", $1, $2}' "$RESULTS_FILE"
+} > "$TABLE_FILE"
+
+echo -e "\n=== Resumen de Tiempos ==="
+cat "$TABLE_FILE"
+echo -e "\nTabla guardada en: $TABLE_FILE"
