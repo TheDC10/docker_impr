@@ -5,9 +5,6 @@ RESULTS_FILE="$LOG_DIR/results.txt"
 mkdir -p "$LOG_DIR"
 touch "$RESULTS_FILE"
 
-# Construir imágenes usando docker-compose interno
-docker-compose -f /app/docker-compose.yml build
-
 # Lista de servicios
 SERVICES=("go_app" "java_app" "js_app" "python_app" "rust_app")
 
@@ -16,6 +13,9 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     mkdir -p "$SERVICE_LOG_DIR"
     TIMESTAMP=$(date +%Y%m%d_%H%M%S)
     LOG_FILE="$SERVICE_LOG_DIR/${TIMESTAMP}.log"
+
+    # Construir solo el servicio actual
+    docker-compose -f /app/docker-compose.yml build $SERVICE_NAME
 
     echo "Ejecutando contenedor: $SERVICE_NAME..."
     docker-compose -f /app/docker-compose.yml run --rm "$SERVICE_NAME" 2>&1 | tee "$LOG_FILE"
@@ -34,6 +34,10 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     esac
     
     echo "$language|$time|ms" >> "$RESULTS_FILE"
+
+    # Limpiar imágenes y capas intermedias
+    docker image rm -f $SERVICE_NAME
+    docker system prune -f
 done
 
 # Generar tabla de resumen
