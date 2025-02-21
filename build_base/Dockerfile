@@ -1,17 +1,14 @@
 FROM docker:dind
 
-WORKDIR /repo
+WORKDIR /app
+
+COPY log.sh /app/log.sh
+RUN chmod +x /app/log.sh
 
 VOLUME /logs
+VOLUME /repo
 
 RUN apk add --no-cache git
-
 RUN git clone https://github.com/dygeraldino/Test-Codes /repo
 
-COPY docker-compose.yml /repo
-
-COPY log.sh /log.sh
-
-RUN chmod +x /log.sh
-
-ENTRYPOINT ["/log.sh"]
+ENTRYPOINT ["/app/log.sh"]
