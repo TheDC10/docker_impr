@@ -1,0 +1,15 @@
+services:
+  go_app:
+    build: /repo/go_app
+
+  java_app:
+    build: /repo/java_app
+
+  js_app:
+    build: /repo/js_app
+
+  python_app:
+    build: /repo/python_app
+
+  rust_app:
+    build: /repo/rust_app
