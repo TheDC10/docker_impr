@@ -1,0 +1,36 @@
+services:
+  go_app:
+    build: ./repo/go_app
+    container_name: go_app
+    depends_on:
+      - dind
+
+  java_app:
+    build: ./repo/java_app
+    container_name: java_app
+    depends_on:
+      - dind
+
+  js_app:
+    build: ./repo/js_app
+    container_name: js_app
+    depends_on:
+      - dind
+
+  python_app:
+    build: ./repo/python_app
+    container_name: python_app
+    depends_on:
+      - dind
+
+  rust_app:
+    build: ./repo/rust_app
+    container_name: rust_app
+    depends_on:
+      - dind
+
+  dind:
+    image: docker:dind
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -1,8 +1,12 @@
 FROM docker:dind
 
-RUN apk add --no-cache git bash
+WORKDIR /repo
 
-COPY build-img.sh /build-img.sh
-RUN chmod +x /build-img.sh
+RUN apk add --no-cache git
 
-ENTRYPOINT ["/build-img.sh"]
+RUN git clone https://github.com/dygeraldino/Test-Codes /repo
+
+COPY docker-compose.yml /repo
+
+CMD ["docker-compose", "up", "--build"]
+
