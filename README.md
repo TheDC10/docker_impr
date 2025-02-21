@@ -6,22 +6,16 @@ Este repositorio contiene los recursos necesarios para construir y ejecutar un c
 
 ## 🚀 Pasos para ejecutar en PWD
 
-### 1. Crear directorio para logs
+### 1. Crear directorio para logs y actualizar paquetes e instalar Git
 
 ```bash
-mkdir logs
-```
-
-### 2. Actualizar paquetes e instalar Git
-
-```bash
-apk update && apk add git
+mkdir logs && apk update && apk add git
 ```
 
 ### 3. Clonar el repositorio del Dockerfile
 
 ```bash
-git clone https://github.com/dygeraldino/Dockerfile-solution.git
+git clone https://github.com/TheDC10/docker_impr
 ```
 
 ### 4. Acceder al directorio del proyecto
@@ -41,9 +35,8 @@ docker build -t docker-builder .
 ```bash
 docker run --rm \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v /root/logs:/logs \
-  docker-builder \
-  https://github.com/dygeraldino/Test-Codes.git
+  -v $(pwd)/logs:/logs \
+  docker-builder
 ```
 
 ## 🔍 Explicación de los comandos
