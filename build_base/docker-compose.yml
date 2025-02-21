@@ -1,35 +1,15 @@
-version: '3'
-
 services:
-  log_runner:
-    build: .
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs:/logs
-      - ./repo:/repo
-    network_mode: host
-
   go_app:
-    build: ./repo/go_app
-    depends_on:
-      - log_runner
+    build: /repo/go_app
 
   java_app:
-    build: ./repo/java_app
-    depends_on:
-      - log_runner
+    build: /repo/java_app
 
   js_app:
-    build: ./repo/js_app
-    depends_on:
-      - log_runner
+    build: /repo/js_app
 
   python_app:
-    build: ./repo/python_app
-    depends_on:
-      - log_runner
+    build: /repo/python_app
 
   rust_app:
-    build: ./repo/rust_app
-    depends_on:
-      - log_runner
+    build: /repo/rust_app

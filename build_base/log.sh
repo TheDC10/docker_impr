@@ -5,8 +5,10 @@ RESULTS_FILE="$LOG_DIR/results.txt"
 mkdir -p "$LOG_DIR"
 touch "$RESULTS_FILE"
 
-docker-compose build
+# Construir imágenes usando docker-compose interno
+docker-compose -f /app/docker-compose.yml build
 
+# Lista de servicios
 SERVICES=("go_app" "java_app" "js_app" "python_app" "rust_app")
 
 for SERVICE_NAME in "${SERVICES[@]}"; do
@@ -16,10 +18,12 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     LOG_FILE="$SERVICE_LOG_DIR/${TIMESTAMP}.log"
 
     echo "Ejecutando contenedor: $SERVICE_NAME..."
-    docker-compose run --rm "$SERVICE_NAME" 2>&1 | tee "$LOG_FILE"
+    docker-compose -f /app/docker-compose.yml run --rm "$SERVICE_NAME" 2>&1 | tee "$LOG_FILE"
 
+    # Extraer tiempo del log
     time=$(grep -oE '[0-9]+' "$LOG_FILE" | head -n1)
     
+    # Mapear servicio a lenguaje
     case "$SERVICE_NAME" in
         "go_app") language="Go" ;;
         "rust_app") language="Rust" ;;
@@ -32,6 +36,7 @@ for SERVICE_NAME in "${SERVICES[@]}"; do
     echo "$language|$time|ms" >> "$RESULTS_FILE"
 done
 
+# Generar tabla de resumen
 TABLE_FILE="$LOG_DIR/execution_summary.txt"
 {
   echo "Lenguaje     | Tiempo (ms)"
