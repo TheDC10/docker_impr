@@ -21,7 +21,7 @@ git clone https://github.com/TheDC10/docker_impr
 ### 4. Acceder al directorio del proyecto
 
 ```bash
-cd Dockerfile-solution/build_base
+cd docker_impr/build_base
 ```
 
 ### 5. Construir la imagen `docker-builder`
