@@ -12,25 +12,25 @@ Este repositorio contiene los recursos necesarios para construir y ejecutar un c
 mkdir logs && apk update && apk add git
 ```
 
-### 3. Clonar el repositorio del Dockerfile
+### 2. Clonar el repositorio del Dockerfile
 
 ```bash
 git clone https://github.com/TheDC10/docker_impr
 ```
 
-### 4. Acceder al directorio del proyecto
+### 3. Acceder al directorio del proyecto
 
 ```bash
 cd docker_impr/build_base
 ```
 
-### 5. Construir la imagen `docker-builder`
+### 4. Construir la imagen `docker-builder`
 
 ```bash
 docker build -t docker-builder .
 ```
 
-### 6. Ejecutar el contenedor con Docker-in-Docker (DinD)
+### 5. Ejecutar el contenedor con Docker-in-Docker (DinD)
 
 ```bash
 docker run --rm \
