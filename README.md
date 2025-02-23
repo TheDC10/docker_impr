@@ -120,4 +120,3 @@ docker run --rm \
 
 ✨ **Conclusión**:  
 El proyecto mejorado ofrece un flujo *estructurado*, *reproducible* y *eficiente en recursos*, ideal para escenarios de benchmarking o CI/CD donde el orden y la trazabilidad son críticos.
-```
